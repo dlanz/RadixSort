@@ -1,24 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package radixsort;
-
 import java.util.*;
-
 /**
- *
- * @author Dans
+ * @author dlanz
  */
 public class RadixSort {
 
-    
-    
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+      
         int[] theArray = {4,3,5,9,7,2,4,1,6,5};
         
         RadixSort theSort = new RadixSort();
@@ -46,7 +34,7 @@ public class RadixSort {
             }
         }
         significant = String.valueOf(max).length();
-        Queue<Integer> thisQueue;
+        
         for(int j = 1; j <= significant; j++){
            
             lists.clear();
@@ -60,7 +48,7 @@ public class RadixSort {
                   System.out.println(curVal); //Correctly outputs the expected result
                   System.out.println(lists.get(curVal)); //With each iteration this outputs 10 elements each with a queue of all values.
                   
-                  thisQueue = new LinkedList<>();
+                  Queue<Integer> thisQueue = new LinkedList<>();
                   thisQueue = lists.get(curVal);
                   thisQueue.add(value);
                   
