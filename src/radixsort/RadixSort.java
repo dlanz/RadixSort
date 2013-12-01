@@ -4,66 +4,76 @@ import java.util.*;
  * @author dlanz
  */
 public class RadixSort {
-
-    public static void main(String[] args) {
-      
-        int[] theArray = {4,3,5,9,7,2,4,1,6,5};
-        
-        RadixSort theSort = new RadixSort();
-        
-        System.out.println(Arrays.toString(theArray)); //Outputs the original array
-        theSort.sort(theArray);
-        System.out.println(Arrays.toString(theArray)); //Outputs the original array (no modifictions)
+    private int[] theArray;
+    public void setArray(int[] array){
+        this.theArray = array;
+    }    
+    public int[] getArray(){
+        return this.theArray;
     }
     
- 
+    private int modulo = 10;
+    public void setModulo(int mod){
+        this.modulo = mod;
+    }    
+    public int getModulo(){
+        return this.modulo;
+    }
     
-    public void sort(int[] theArray) {
-        int significant;
-        int curVal;    
-        int modulo = 10;
-        int ofInterest = 1;
-        
-        LinkedList<Queue> lists = new LinkedList<>();
-        Queue<Integer> queue = new LinkedList<>();
-        
+    private int ofInterest = 1;   
+    public void setInterest(int interest){
+        this.ofInterest = interest;
+    }    
+    public int getInterest(){
+        return this.ofInterest;
+    }
+    
+    private int significant = 0;
+    private int curVal = 0;   
+    
+    private int max(int[] theArray) {
         int max = theArray[0];
         for(int i = 0; i < theArray.length; i++) {
             if ( theArray[i] > max) {
                   max = theArray[i];
             }
         }
-        significant = String.valueOf(max).length();
+        return max;
+    }
+    
+    public int[] sort() {
+        LinkedList<Queue> lists = new LinkedList<>();
+        Queue<Integer> queue;
         
-        for(int j = 1; j <= significant; j++){
-           
-            lists.clear();
-            for(int i = 0; i < 10; i++){
-                lists.add(i, queue);
+        lists.clear();
+        for(int i = 0; i < 10; i++){
+            queue = new LinkedList<>();
+            lists.add(i, queue);
+        }
+       
+        this.significant = String.valueOf(max(this.theArray)).length();
+        
+        for(int j = 1; j <= this.significant; j++){
+            Queue<Integer> thisQueue;
+            for(int value : this.theArray){
+                this.curVal = value % this.modulo;
+                this.curVal = this.curVal / this.ofInterest;
+                thisQueue = lists.get(this.curVal);
+                thisQueue.add(value);
+                lists.set(this.curVal, thisQueue);
             }
-            System.out.println(lists); //Outputs a list of 10 elements each with a value of null
-            for(int value : theArray){
-                  curVal = value % modulo;
-                  curVal = curVal / ofInterest;
-                  System.out.println(curVal); //Correctly outputs the expected result
-                  System.out.println(lists.get(curVal)); //With each iteration this outputs 10 elements each with a queue of all values.
-                  
-                  Queue<Integer> thisQueue = new LinkedList<>();
-                  thisQueue = lists.get(curVal);
-                  thisQueue.add(value);
-                  
-                  lists.set(curVal, thisQueue);// This seems to insert the generated queue into every linked lists node.
-            }
+            
             int k = 0;
             for(int i = 0; i < 10; i++){
-                Queue<Integer> curQueue = lists.get(i);
-                if(!curQueue.isEmpty()){
-                    theArray[k] = curQueue.remove();
+                thisQueue = lists.get(i);
+                while(!thisQueue.isEmpty()){
+                    this.theArray[k] = thisQueue.remove();
                     k++;
                 }
             }
-            ofInterest = ofInterest * 10;
-            modulo = modulo * 10;
+            this.ofInterest = this.ofInterest * 10;
+            this.modulo = this.modulo * 10;
         }
+        return this.theArray;
     }
 }
