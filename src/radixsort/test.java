@@ -1,15 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package radixsort;
-
+/**
+ * @author Dan
+ */
 import java.util.Arrays;
 
-/**
- *
- * @author Dans
- */
 public class test {
     public static void main(String[] args) {
         int[] theArray = {43,37,597,98,73,214,436,100,67,512};

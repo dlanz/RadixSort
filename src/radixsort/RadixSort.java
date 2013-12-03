@@ -1,8 +1,9 @@
 package radixsort;
-import java.util.*;
 /**
- * @author dlanz
+ * @author Dan
  */
+import java.util.*;
+
 public class RadixSort {
     private int[] theArray;
     public void setArray(int[] array){
